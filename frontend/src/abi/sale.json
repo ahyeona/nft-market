@@ -51,7 +51,7 @@
         ],
         "name": "accept",
         "outputs": [],
-        "stateMutability": "nonpayable",
+        "stateMutability": "payable",
         "type": "function"
     },
     {

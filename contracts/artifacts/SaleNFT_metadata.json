@@ -57,7 +57,7 @@
 				],
 				"name": "accept",
 				"outputs": [],
-				"stateMutability": "nonpayable",
+				"stateMutability": "payable",
 				"type": "function"
 			},
 			{
@@ -678,11 +678,11 @@
 			]
 		},
 		"saleNFT.sol": {
-			"keccak256": "0x3ebc5149059373fa430e7853f1f0b3ab01a41289fae2fbc3de361a017279551b",
+			"keccak256": "0xf75bbe507cf2b625d8c47d63f4a6293831d7bed2c74c9afc84f8f4b17852c590",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://d2fc1ed5a996dad2550ea47cd20387cef16d3f4f186dedb2f41ab48d2064e270",
-				"dweb:/ipfs/QmaRkkmiVn9cFiGP7ce97NJWPweBSXRNisYjJVTbhd8dUR"
+				"bzz-raw://26d8bc42f96488e0ff5e5e86d0f5da455bce0a397cfb2ff90909951ed90d2789",
+				"dweb:/ipfs/QmP9B6HVqW4QupSwawfZbAqJsydpq5Ws2ezx9E2Te1vPVC"
 			]
 		}
 	},

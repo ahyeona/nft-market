@@ -35,7 +35,7 @@ contract SaleNFT {
     struct TokenReturned {
         uint256 tokenId;
         string jsonUri;
-        address seller;
+        address seller; // seller가 아니라 지금 owner를 반환하고 있음
         SaleState state;
         uint256 price;
         // 구매자? 확인
@@ -118,6 +118,7 @@ contract SaleNFT {
     function buyNFT(uint256 tokenId) public payable {
         // 해당 토큰이 거래 가능한 상태여야 함
         require(tokenSaleDatas[tokenId].state == SaleState.ForSale, "state");
+        require(tokenSaleDatas[tokenId].buyer == address(0));
         // 금액이 해당 토큰의 price 보다 적으면 안됨
         require(tokenSaleDatas[tokenId].price <= msg.value, "price");
 
@@ -126,13 +127,16 @@ contract SaleNFT {
     }
 
     // 판매 확정
-    // function accept(uint256 tokenId) public payable {
-    function accept(uint256 tokenId) public {
+    function accept(uint256 tokenId) public payable {
+    // function accept(uint256 tokenId) public {
         // 구매신청된 상태여야 함
         require(tokenSaleDatas[tokenId].state == SaleState.Pending, "state");
 
         // ca가 금액을 적게 가지고 있으면 안됨
         require(_nft.balanceOf(address(this)) <= tokenSaleDatas[tokenId].price);
+
+        // 판매자에게 상품 금액 보내기
+        payable(_nft.ownerOf(tokenId)).transfer(tokenSaleDatas[tokenId].price);
 
         // nft 소유권 구매자에게 줌
         _nft.transferFrom(
@@ -147,9 +151,6 @@ contract SaleNFT {
         // _nft.transferFrom(address(this), tokenSaleDatas[tokenId].buyer, tokenId);
 
         tokenSaleDatas[tokenId].state = SaleState.Sold;
-
-        // 판매자에게 상품 금액 보내기
-        payable(_nft.ownerOf(tokenId)).transfer(tokenSaleDatas[tokenId].price);
     }
 
     // 랭킹 계산하는 함수
