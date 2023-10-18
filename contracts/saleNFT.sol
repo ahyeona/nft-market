@@ -12,7 +12,8 @@ contract SaleNFT {
     MyNFT public _nft;
     // CA 상호작용할 컨트랙트를 담을 상태변수
 
-    uint256 constant decimals = 18;
+    // 확인 18에서 수정
+    uint256 constant decimals = 15;
 
     // 판매 상태
     enum SaleState {
@@ -121,6 +122,7 @@ contract SaleNFT {
         require(tokenSaleDatas[tokenId].price <= msg.value, "price");
 
         tokenSaleDatas[tokenId].buyer = msg.sender;
+        tokenSaleDatas[tokenId].state = SaleState.Pending;
     }
 
     // 판매 확정
@@ -196,43 +198,62 @@ contract SaleNFT {
     }
 
     // 판매중, 판매 완료된 nft 목록 반환
-    function getSaledNFTList() public view returns (TokenReturned[] memory) {
+    function getSaledNFTList() public view returns (TokenReturned[] memory, TokenReturned[] memory, TokenReturned[] memory) {
         uint256 length = sellers[msg.sender].length;
         TokenReturned[] memory list = new TokenReturned[](length);
+        TokenReturned[] memory list2 = new TokenReturned[](length);
+        TokenReturned[] memory list3 = new TokenReturned[](length);
         uint256 count = 0;
+        uint256 count2 = 0;
+        uint256 count3 = 0;
         for (uint256 i = 0; i<length; i++) {
             if (tokenSaleDatas[sellers[msg.sender][i]].state == SaleState.ForSale) {
                 list[count] = getTokenReturned(sellers[msg.sender][i]);
                 count++;
+            } else if (tokenSaleDatas[sellers[msg.sender][i]].state == SaleState.Pending) {
+                list2[count2] = getTokenReturned(sellers[msg.sender][i]);
+                count2++;
+            } else if (tokenSaleDatas[sellers[msg.sender][i]].state == SaleState.Sold) {
+                list3[count3] = getTokenReturned(sellers[msg.sender][i]);
+                count3++;
             }
         }
         assembly {
             mstore(list, count)
+            mstore(list2, count2)
+            mstore(list3, count3)
         }
-        return list;
+        return (list, list2, list3);
     }
 
     // 구매 신청, 구매 nft 목록
-    function getBuyNFTList() public view returns (TokenReturned[] memory) {
+    function getBuyNFTList() public view returns (TokenReturned[] memory, TokenReturned[] memory) {
         uint256 length = tokenIds.length;
         TokenReturned[] memory list = new TokenReturned[](length);
+        TokenReturned[] memory list2 = new TokenReturned[](length);
         uint256 count = 0;
+        uint256 count2 = 0;
         for (uint256 i = 0; i<length; i++) {
-            if (tokenSaleDatas[tokenIds[i]].state == SaleState.Sold) {
+            if (tokenSaleDatas[tokenIds[i]].state == SaleState.Pending && tokenSaleDatas[tokenIds[i]].buyer == msg.sender) {
                 list[count] = getTokenReturned(tokenIds[i]);
                 count++;
+            } else if (tokenSaleDatas[tokenIds[i]].state == SaleState.Sold && tokenSaleDatas[tokenIds[i]].buyer == msg.sender) {
+                list2[count2] = getTokenReturned(tokenIds[i]);
+                count2++;
             }
         }
         assembly {
             mstore(list, count)
+            mstore(list2, count2)
+
         }
-        return list;
+        return (list, list2);
     }
 
 
-    // // 판매자가 등록한 nft의 내용 반환
+    // 판매자가 등록한 nft의 내용 반환
     // // function getResisterNFT() public returns (string[] memory, uint256[] memory) {
-    // function getResisterNFT() public returns (TokenData[] memory) {
+    function getRegisterNFT() public view returns (TokenData[] memory) {
     //     // uint256 length = tokenDatas[msg.sender].length;
     //     // string[] memory hashArr = new string[](length);
     //     // uint256[] memory volumeArray = new uint256[](length);
@@ -243,8 +264,8 @@ contract SaleNFT {
     //     // }
 
     //     // return (hashArr, volumeArray);
-    //     return tokenDatas[msg.sender];
-    // }
+        return tokenDatas[msg.sender];
+    }
 
     // 판매 내용
     // 누가 판매 등록했는지 담을 상태변수 등

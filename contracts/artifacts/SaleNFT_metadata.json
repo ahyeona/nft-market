@@ -113,6 +113,43 @@
 						"internalType": "struct SaleNFT.TokenReturned[]",
 						"name": "",
 						"type": "tuple[]"
+					},
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "tokenId",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "jsonUri",
+								"type": "string"
+							},
+							{
+								"internalType": "address",
+								"name": "seller",
+								"type": "address"
+							},
+							{
+								"internalType": "enum SaleNFT.SaleState",
+								"name": "state",
+								"type": "uint8"
+							},
+							{
+								"internalType": "uint256",
+								"name": "price",
+								"type": "uint256"
+							},
+							{
+								"internalType": "address",
+								"name": "buyer",
+								"type": "address"
+							}
+						],
+						"internalType": "struct SaleNFT.TokenReturned[]",
+						"name": "",
+						"type": "tuple[]"
 					}
 				],
 				"stateMutability": "view",
@@ -135,6 +172,31 @@
 					}
 				],
 				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getRegisterNFT",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "jsonHash",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "volume",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct SaleNFT.TokenData[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -186,6 +248,80 @@
 				"inputs": [],
 				"name": "getSaledNFTList",
 				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "tokenId",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "jsonUri",
+								"type": "string"
+							},
+							{
+								"internalType": "address",
+								"name": "seller",
+								"type": "address"
+							},
+							{
+								"internalType": "enum SaleNFT.SaleState",
+								"name": "state",
+								"type": "uint8"
+							},
+							{
+								"internalType": "uint256",
+								"name": "price",
+								"type": "uint256"
+							},
+							{
+								"internalType": "address",
+								"name": "buyer",
+								"type": "address"
+							}
+						],
+						"internalType": "struct SaleNFT.TokenReturned[]",
+						"name": "",
+						"type": "tuple[]"
+					},
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "tokenId",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "jsonUri",
+								"type": "string"
+							},
+							{
+								"internalType": "address",
+								"name": "seller",
+								"type": "address"
+							},
+							{
+								"internalType": "enum SaleNFT.SaleState",
+								"name": "state",
+								"type": "uint8"
+							},
+							{
+								"internalType": "uint256",
+								"name": "price",
+								"type": "uint256"
+							},
+							{
+								"internalType": "address",
+								"name": "buyer",
+								"type": "address"
+							}
+						],
+						"internalType": "struct SaleNFT.TokenReturned[]",
+						"name": "",
+						"type": "tuple[]"
+					},
 					{
 						"components": [
 							{
@@ -542,11 +678,11 @@
 			]
 		},
 		"saleNFT.sol": {
-			"keccak256": "0x364b561c7d1e1cd07aaab9891df09040589288e393d0f9f3d14722e9370217e3",
+			"keccak256": "0x3ebc5149059373fa430e7853f1f0b3ab01a41289fae2fbc3de361a017279551b",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://ec2e7ee9ebca9134620c627a384731fba9cec504d4500afa8710e8ffa6cd934e",
-				"dweb:/ipfs/QmWMvePeqQ87h9RbSwSiTkZRHz8b1b4niM8wfK6DD5cHpW"
+				"bzz-raw://d2fc1ed5a996dad2550ea47cd20387cef16d3f4f186dedb2f41ab48d2064e270",
+				"dweb:/ipfs/QmaRkkmiVn9cFiGP7ce97NJWPweBSXRNisYjJVTbhd8dUR"
 			]
 		}
 	},
