@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios';
+import { Btn } from '../components/TokenAdditionalInfo/btn/btn.styled';
 
 const Detail = ({ user, web3, contract }) => {
   const { id } = useParams();
@@ -21,7 +22,7 @@ const Detail = ({ user, web3, contract }) => {
 
   // 구매 신쳥
   const buyNFT = async () => {
-    console.log("Type of price:", typeof token.price.toString(10));
+    if (user.account.toLowerCase() == token.seller.toLowerCase()) return;
     const data = await contract.methods.buyNFT(id).send({
       from : user.account,
       value : await web3.utils.toWei(token.price, "ether").toString(10)
@@ -32,25 +33,35 @@ const Detail = ({ user, web3, contract }) => {
 
   useEffect(() => {
     getToken();
-  }, []);
+  }, [user, web3]);
 
   useEffect(()=>{
-    console.log("token", token);
+    if (token) {
+      console.log("token", token);
+    }
   }, [token]);
 
   return (
     <div>
-      <div>{token.name}</div>
-      <div>{token.tokenId}번</div>
-      <div>{token.description}</div>
-      <div>{token.ranking}</div>
-      <div>{token.seller}</div>
-      <div>{token.price}ETH</div>
-      <img src={token.image} />
+      {
+        token ?
+        <>
+          <div>{token.name}</div>
+          <div>{token.tokenId}번</div>
+          <div>{token.description}</div>
+          <div>{token.ranking}</div>
+          <div>{token.seller}</div>
+          <div>{token.price}ETH</div>
+          <img src={token.image} />
+
+        </>
+        :
+        <></>
+      }
 
       {/* 확인. state */}
-      {token.state == 1 ?
-        <button onClick={buyNFT}>구매 신청</button>
+      {(token && token?.state == 1 && token.seller.toLowerCase() != user.account.toLowerCase()) ?
+        <Btn onClick={buyNFT}>구매 신청</Btn>
         :
         <></>
       }

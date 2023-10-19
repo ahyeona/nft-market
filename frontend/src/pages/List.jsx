@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
+import { NftList } from '../components/TokenAdditionalInfo';
 
 const List = ({ user, web3, contract }) => {
   const nav = useNavigate();
@@ -29,20 +30,12 @@ const List = ({ user, web3, contract }) => {
 
   return (
     <div>
-      목록
+      <h1>판매 목록</h1>
       {
         saleList.length != 0 ?
-        saleList.map((el, index) => {
-          return (
-            <div onClick={(e)=>{nav(`/detail/${el.tokenId}`)}} style={{backgroundColor : "aliceblue"}}>
-              <div>{el.name}</div>
-              <div>{el.price}ETH</div>
-              <img src={el.image} />
-            </div>
-          )
-        })
+        <NftList list={saleList} />
           :
-          <></>
+        <></>
       }
 
     </div>

@@ -10,6 +10,11 @@ const Register = ({ user, web3, contract }) => {
   const [image, setImage] = useState(null);
 
   const upload = async () => {
+    if (name == "" || description == "" || volume <= 0 || !Number.isInteger(parseInt(volume)) || !image) {
+      alert("모든 값을 입력하세요.");
+      return;
+    }
+
     // 랭킹 받아오기
     const ranking = await contract.methods.getRanking(volume).call();
     console.log("ranking", ranking);
@@ -70,11 +75,11 @@ const Register = ({ user, web3, contract }) => {
     <div>
       등록
       <label>이름</label>
-      <input type="text" onChange={(e) => { setName(e.target.value) }} />
+      <input type="text" onChange={(e) => { setName(e.target.value.trim()) }} />
       <label>설명</label>
-      <input type="text" onChange={(e) => { setDescription(e.target.value) }} />
+      <input type="text" onChange={(e) => { setDescription(e.target.value.trim()) }} />
       <label>발행량</label>
-      <input type="text" onChange={(e) => { setVolume(e.target.value) }} />
+      <input type="text" onChange={(e) => { setVolume(e.target.value.trim()) }} />
       <label>이미지</label>
       <input type="file" onChange={(e) => { setImage(e.target.files[0]) }} />
       <button onClick={upload}>등록</button>

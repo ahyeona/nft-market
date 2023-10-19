@@ -55,13 +55,11 @@ const Mypage = ({user, web3, contract}) => {
   }
 
 
-
-
   useEffect(()=>{
     getRegisterNFT();
     getSaledNFTList();
     getBuyNFTList();
-  }, []);
+  }, [user]);
 
   return (
     <div>Mypage

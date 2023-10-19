@@ -13,7 +13,7 @@ contract SaleNFT {
     // CA 상호작용할 컨트랙트를 담을 상태변수
 
     // 확인 18에서 수정
-    uint256 constant decimals = 15;
+    uint256 constant decimals = 18;
 
     // 판매 상태
     enum SaleState {
@@ -81,7 +81,7 @@ contract SaleNFT {
 
     // 토큰 발행
     // 판매 시작()
-    function _saleNFTmint(string memory jsonHash, uint256 price) public {
+    function _saleNFTmint(string memory jsonHash, uint256 price, uint256 decimal) public {
         // require(TokenData[jsonHash] >= 1, "volume");
         // require(TokenData.jsonHash >= 1, "volume");
         require(salesNFT() == true, "approve");
@@ -104,7 +104,7 @@ contract SaleNFT {
 
         tokenSaleDatas[tokenId] = TokenSaleData(
             SaleState.ForSale,
-            price * (10 ** decimals),
+            price * (10 ** (decimals - decimal)),
             address(0),
             msg.sender
         );
