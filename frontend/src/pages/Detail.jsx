@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios';
-import { Btn } from '../components/TokenAdditionalInfo/btn/btn.styled';
+import { Btn } from '../components/btn/btn.styled';
 
 const Detail = ({ user, web3, contract }) => {
   const { id } = useParams();

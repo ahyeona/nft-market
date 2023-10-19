@@ -1,5 +1,5 @@
 import React from 'react'
-import { Nft } from "../index";
+import { Nft } from "../TokenAdditionalInfo/index";
 import { useNavigate } from 'react-router-dom'
 import { NftListDiv } from './nftList.styled';
 
