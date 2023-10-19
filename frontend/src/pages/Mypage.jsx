@@ -6,7 +6,7 @@ import TokenAdditionalInfo from '../components/TokenAdditionalInfo/TokenAddition
 const Mypage = ({user, web3, contract}) => {
   const [registerList, setRegisterList] = useState([]);
   const [pendingList, setPendingList] = useState([]);
-  
+
   // 등록한 정보 불러오는 함수
   const getRegisterNFT = async () => {
     const data = await contract.methods.getRegisterNFT().call({
@@ -29,10 +29,11 @@ const Mypage = ({user, web3, contract}) => {
     });
     console.log("getSaledNFTList", list);
 
-    // 
+    //
     const pendings = list[1].map((el,index)=>{
       return {...el, tokenId : parseInt(el.tokenId)}
     });
+    console.log("pendings", pendings);
     setPendingList(pendings);
   }
 
@@ -67,7 +68,7 @@ const Mypage = ({user, web3, contract}) => {
       <div>
         <div>판매 - 수락 대기</div>
         {
-          pendingList.length != 0 ? 
+          pendingList.length != 0 ?
           pendingList.map((el, index) => {
             return (
               <>
@@ -91,8 +92,8 @@ const Mypage = ({user, web3, contract}) => {
               </>
             )
           })
-            
-          
+
+
           :
           <></>
         }

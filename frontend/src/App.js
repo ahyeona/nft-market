@@ -7,7 +7,7 @@ import { Detail, List, Mypage, Register } from "./pages";
 const App = () => {
   const { user, web3 } = useWeb3();
   const [contract, setContract] = useState(null);
-  const CA = "0x2fB296AEecDaF6476B1C1bA9Fe8C4C98892081FF";
+  const CA = "0x638b8877621F41c3F1EcbfD7B60D21203C51045C";
 
   useEffect(()=>{
     if (web3 == null) return;

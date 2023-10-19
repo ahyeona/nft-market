@@ -15,12 +15,13 @@ contract MyNFT is ERC721 {
         string memory _symbol
     ) ERC721(_name, _symbol) {}
 
-    function minting(string memory jsonHash) public returns (uint256) {
+    function minting(string memory jsonHash, address sender) public returns (uint256) {
         tokens[tokenId] = jsonHash;
 
         // NFT의 소유권 및 권한 설정
         // owner, _tokenApprovals, _operatorApprovals 확인
-        _mint(msg.sender, tokenId);
+        // _mint(msg.sender, tokenId);
+        _mint(sender, tokenId);
         tokenId += 1;
         return tokenId - 1;
     }

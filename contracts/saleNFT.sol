@@ -29,6 +29,7 @@ contract SaleNFT {
         uint256 price;
         // 구매자? 확인
         address buyer;
+        address seller;
     }
 
     // 반환할 토큰 형태
@@ -83,6 +84,8 @@ contract SaleNFT {
     function _saleNFTmint(string memory jsonHash, uint256 price) public {
         // require(TokenData[jsonHash] >= 1, "volume");
         // require(TokenData.jsonHash >= 1, "volume");
+        require(salesNFT() == true, "approve");
+
         uint256 length = tokenDatas[msg.sender].length;
         uint256 idx;
         for (uint256 i=0; i < length; i++) {
@@ -95,19 +98,20 @@ contract SaleNFT {
         require(tokenDatas[msg.sender][idx].volume >= 1, "volume");
 
         // CA에서 CA로 메시지 전송 메서드 실행
-        uint256 tokenId = _nft.minting(jsonHash);
+        uint256 tokenId = _nft.minting(jsonHash, msg.sender);
 
         tokenIds.push(tokenId);
 
         tokenSaleDatas[tokenId] = TokenSaleData(
             SaleState.ForSale,
             price * (10 ** decimals),
-            address(0)
+            address(0),
+            msg.sender
         );
 
         sellers[msg.sender].push(tokenId);
 
-        salesNFT();
+        
 
         // 토큰 발행량 감소
         // TokenData[jsonHash] -= 1;
@@ -133,14 +137,14 @@ contract SaleNFT {
         require(tokenSaleDatas[tokenId].state == SaleState.Pending, "state");
 
         // ca가 금액을 적게 가지고 있으면 안됨
-        require(_nft.balanceOf(address(this)) <= tokenSaleDatas[tokenId].price);
+        // require(_nft.balanceOf(address(this)) <= tokenSaleDatas[tokenId].price);
 
         // 판매자에게 상품 금액 보내기
         payable(_nft.ownerOf(tokenId)).transfer(tokenSaleDatas[tokenId].price);
 
         // nft 소유권 구매자에게 줌
         _nft.transferFrom(
-            address(this),
+            _nft.ownerOf(tokenId),
             tokenSaleDatas[tokenId].buyer,
             tokenId
         );
@@ -177,7 +181,7 @@ contract SaleNFT {
     }
 
     function getTokenReturned(uint256 tokenId) public view returns (TokenReturned memory) {
-        return TokenReturned(tokenId, _nft.tokenURI(tokenId), _nft.ownerOf(tokenId), tokenSaleDatas[tokenId].state, tokenSaleDatas[tokenId].price, tokenSaleDatas[tokenId].buyer);
+        return TokenReturned(tokenId, _nft.tokenURI(tokenId), tokenSaleDatas[tokenId].seller, tokenSaleDatas[tokenId].state, tokenSaleDatas[tokenId].price, tokenSaleDatas[tokenId].buyer);
     }
 
     // 판매 가능한 nft 목록 출력
@@ -225,6 +229,11 @@ contract SaleNFT {
             mstore(list3, count3)
         }
         return (list, list2, list3);
+    }
+
+    // owner 확인
+    function getOwner(uint256 tokenId) public view returns (address) {
+        return _nft.ownerOf(tokenId);
     }
 
     // 구매 신청, 구매 nft 목록

@@ -18,7 +18,7 @@ const Detail = ({ user, web3, contract }) => {
     setToken({ ...data, name, tokenId, price, description, image, ranking: attributes[0].value });
   }
 
-  // 구매 신쳥 
+  // 구매 신쳥
   const buyNFT = async () => {
     console.log("Type of price:", typeof token.price.toString(10));
     const data = await contract.methods.buyNFT(id).send({
@@ -32,6 +32,10 @@ const Detail = ({ user, web3, contract }) => {
   useEffect(() => {
     getToken();
   }, []);
+
+  useEffect(()=>{
+    console.log("token", token);
+  }, [token]);
 
   return (
     <div>
