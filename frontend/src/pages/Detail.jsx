@@ -4,12 +4,13 @@ import axios from 'axios';
 
 const Detail = ({ user, web3, contract }) => {
   const { id } = useParams();
-  const [token, setToken] = useState({});
+  const [token, setToken] = useState(null);
 
   const getToken = async () => {
     const data = await contract.methods.getTokenReturned(id).call();
-
+    console.log(data);
     const reps = await axios.get(data.jsonUri);
+    console.log(reps);
     const { name, description, image, attributes } = reps.data;
     // 확인
     // const tokenId = web3.utils.toBigInt(data.tokenId);
