@@ -101,7 +101,7 @@ const Register = ({ user, web3, contract }) => {
       setImageUrl(null);
     } else {
       setImage(file);
-      setImageUrl(URL.createObjectURL(file));
+      setImageUrl(URL.createObjectURL(file)); 
     }
   }
 
