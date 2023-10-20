@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { Btn } from '../utils/btn.styled';
 
 const TokenAdditionalInfo = ({ el, user, web3, contract, setModal, setTitle, setContent }) => {
     const [priceInput, setPriceInput] = useState(null);
@@ -40,10 +41,11 @@ const TokenAdditionalInfo = ({ el, user, web3, contract, setModal, setTitle, set
         console.log(data);
 
         setModal(false);
+        window.location.reload();
     }
 
     return (
-        <div style={{ backgroundColor: "aliceblue" }}>
+        <div style={{ backgroundColor: "aliceblue", marginRight:"20px", marginBottom:"20px"}}>
             이름 : {el.name}<br />
             설명 : {el.description}<br />
             랭킹 : {el.ranking}<br />
@@ -58,7 +60,7 @@ const TokenAdditionalInfo = ({ el, user, web3, contract, setModal, setTitle, set
                         남은 발행량 : {el.volume}<br />
                         <label>금액</label>
                         <input type="text" onChange={(e) => { setPriceInput(e.target.value.trim()) }} />ETH
-                        <button onClick={minting}>판매</button>
+                        <Btn onClick={minting}>판매</Btn>
                     </>
             }
         </div>

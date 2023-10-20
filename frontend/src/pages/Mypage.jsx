@@ -76,6 +76,8 @@ const Mypage = ({user, web3, contract}) => {
     });
     console.log("data", data);
     setModal(false);
+    alert("완료");
+    window.location.reload();
   }
 
 
@@ -114,9 +116,10 @@ const Mypage = ({user, web3, contract}) => {
 
 
   return (
-    <div>Mypage
+    <div>
+      <h2>마이페이지</h2>
       <div>
-        <div>구매 중</div>
+        <h3>구매 중</h3>
         {
           buyingNFTList.length != 0 ? 
           <NftList list={buyingNFTList} web3={web3} />
@@ -124,7 +127,7 @@ const Mypage = ({user, web3, contract}) => {
           <></>
         }
 
-        <div>구매 완료</div>
+        <h3>구매 완료</h3>
         {
           buyNFTList.length != 0 ? 
           <NftList list={buyNFTList} web3={web3} />
@@ -132,7 +135,7 @@ const Mypage = ({user, web3, contract}) => {
           <></>
         }
 
-        <div>판매 중</div>
+        <h3>판매 중</h3>
         {
           forSaleList.length != 0 ?
           <NftList list={forSaleList} web3={web3} />
@@ -140,7 +143,7 @@ const Mypage = ({user, web3, contract}) => {
           <>없음</>
         }
 
-        <div>판매 - 수락 대기</div>
+        <h3>판매 - 수락 대기</h3>
         {
           pendingList.length != 0 ?
           <NftList list={pendingList} web3={web3} clickFunc={accept} btnText={"수락"} />
@@ -157,7 +160,7 @@ const Mypage = ({user, web3, contract}) => {
           <>없음</>
         }
 
-        <div>판매 완료</div>
+        <h3>판매 완료</h3>
         {
           soldList.length != 0 ?
           <NftList list={soldList} web3={web3} />
@@ -166,20 +169,20 @@ const Mypage = ({user, web3, contract}) => {
         }
 
 
-        <div>등록한 정보</div>
+        <h3>등록한 정보</h3>
         {
           registerList.length != 0 ?
-          registerList.map((el, index)=>{
-            return (
-              <>
-                <TokenAdditionalInfo key={index} el={el} user={user} web3={web3} contract={contract} setModal={setModal} setTitle={setTitle} setContent={setContent} />
-              </>
-            )
-          })
-
-
+          <div style={{display : 'flex', flexWrap:"wrap"}}>
+            {registerList.map((el, index)=>{
+              return (
+                <div>
+                  <TokenAdditionalInfo key={index} el={el} user={user} web3={web3} contract={contract} setModal={setModal} setTitle={setTitle} setContent={setContent} />
+                </div>
+              )
+            })}
+          </div>
           :
-          <></>
+          <>없음</>
         }
       </div>
     </div>

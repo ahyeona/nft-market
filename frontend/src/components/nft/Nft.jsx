@@ -5,8 +5,8 @@ const Nft = ({ token, onClick }) => {
 
   return (
     <NftDiv onClick={onClick} style={{ backgroundColor: "aliceblue" }}>
-      <div>{token.name}</div>
-      <div>{token.price}ETH</div>
+      <h3>{token.name}</h3>
+      <h3>{token.price}ETH</h3>
       <img src={token.image} />
     </NftDiv>
   )

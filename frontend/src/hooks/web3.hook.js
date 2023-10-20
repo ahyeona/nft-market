@@ -36,6 +36,7 @@ const useWeb3 = () => {
                         await window.ethereum.request({
                             method: 'wallet_switchEthereumChain',
                             params: [{ chainId: "0x539" }],
+                            // params: [{ chainId: "0xaa36a7" }],
                         });
                         alert("네트워크 연결");
                     }

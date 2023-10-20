@@ -90,6 +90,7 @@ const Register = ({ user, web3, contract }) => {
     console.log("register : ", register);
     setModal(false);
     alert("등록 완료");
+    window.location.reload();
 
   }
 
