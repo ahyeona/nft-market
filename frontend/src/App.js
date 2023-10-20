@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import useWeb3 from './hooks/web3.hook';
 import abi from "./abi/sale.json";
 import { Detail, List, Mypage, Register } from "./pages";
+import Nav from "./nav/Nav";
+import Modal from "./components/utils/modal/Modal";
 
 const App = () => {
   const { user, web3 } = useWeb3();
   const [contract, setContract] = useState(null);
-  const CA = "0xeB5f6aAbaD742a9Fd87675418E9F1d846f83f6Ba";
+  const CA = "0xC893576a9909e30c997A69Ef6960C026Fa330363";
+
+  const nav = useNavigate();
 
   useEffect(()=>{
     if (web3 == null) return;
@@ -15,11 +19,13 @@ const App = () => {
     setContract(sale);
   }, [web3]);
 
-  if (contract == null) return "contract null";
+  if (contract == null) return <Modal title={"잠시만 기다려주세요."} content={"contract null"}/>;
 
   return (
     <div className="App">
-      <h2>{user.account}</h2>
+      <div style={{cursor:"pointer"}} onClick={()=>{nav("/")}}><h2 >NFT 마켓</h2></div>
+      <div id="nav"><Nav user={user} /></div>
+      
       <Routes>
         <Route path="/" element={<List user={user} web3={web3} contract={contract} />}/>
         <Route path="/detail/:id" element={<Detail user={user} web3={web3} contract={contract} />} />

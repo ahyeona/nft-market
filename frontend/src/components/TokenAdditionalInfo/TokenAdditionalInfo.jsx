@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 
-const TokenAdditionalInfo = ({ el, user, web3, contract }) => {
+const TokenAdditionalInfo = ({ el, user, web3, contract, setModal, setTitle, setContent }) => {
     const [priceInput, setPriceInput] = useState(null);
 
     const getDecimal = () => {
@@ -30,10 +30,16 @@ const TokenAdditionalInfo = ({ el, user, web3, contract }) => {
             return;
         }
 
+        setTitle("지갑");
+        setContent("NFT를 발행하려면 지갑에서 진행해주세요.");
+        setModal(true);        
+
         const data = await contract.methods._saleNFTmint(el.jsonHash, getdecimal[0], getdecimal[1]).send({
             from: user.account
         });
         console.log(data);
+
+        setModal(false);
     }
 
     return (

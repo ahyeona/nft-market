@@ -26,6 +26,21 @@ const useWeb3 = () => {
                     });
                 });
 
+                window.ethereum.on("chainChanged", async (chainId) => {
+                    console.log("네트워크가 변경되었음", chainId);
+                    if (chainId !== "0x539") { // ganache
+                    // if (chainId !== "0xaa36a7") { // 세폴리아
+                    //   const net = await window.ethereum.request({jsonrpc : "2.0", method : "wallet_switchEthereumChain", params : [{chainId : "0x539"}]});
+                    // const net = await window.ethereum.request({jsonrpc : "2.0", method : "wallet_switchEthereumChain", params : [{chainId : "0xaa36a7"}]});
+
+                        await window.ethereum.request({
+                            method: 'wallet_switchEthereumChain',
+                            params: [{ chainId: "0x539" }],
+                        });
+                        alert("네트워크 연결");
+                    }
+                  });
+
             });
         } else {
             alert("메타마스크 설치해주세요");
