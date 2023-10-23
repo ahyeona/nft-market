@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { NftList } from '../components/TokenAdditionalInfo';
+import { NftList } from '../components';
 import axios from 'axios';
 
 const List = ({ user, web3, contract }) => {
@@ -18,7 +18,7 @@ const List = ({ user, web3, contract }) => {
       const reps = await axios.get(el.jsonUri);
       const { attributes } = reps.data;
       switch (attributes[0].value) {
-        case "under 10" :
+        case "under 10":
           list1.push(el);
           break;
         case "under 20":
@@ -53,26 +53,26 @@ const List = ({ user, web3, contract }) => {
       <h3>under 10</h3>
       {
         rank1List.length != 0 ?
-        <NftList list={rank1List} web3={web3} />
-        :
-        <></>
+          <NftList list={rank1List} web3={web3} />
+          :
+          <></>
       }
 
       <h3>under 20</h3>
       {
         rank2List.length != 0 ?
-        <NftList list={rank2List} web3={web3} />
-        :
-        <></>
+          <NftList list={rank2List} web3={web3} />
+          :
+          <></>
       }
 
 
       <h3>up 20</h3>
       {
         rank3List.length != 0 ?
-        <NftList list={rank3List} web3={web3} />
-        :
-        <></>
+          <NftList list={rank3List} web3={web3} />
+          :
+          <></>
       }
 
     </div>

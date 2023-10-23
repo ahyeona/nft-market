@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Btn } from "../components/utils/btn.styled";
 
 export const NavDiv = styled.div`
-    width: 100vw;
+    width: 100%;
     height: 80px;
     background-color: aliceblue;
     display: flex;

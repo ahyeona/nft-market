@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Container, ModalDiv } from './modal.styled'
+import { CloseSpan, Container, ModalDiv } from './modal.styled'
 
 const Modal = ({setModal, title, content}) => {
 
+  document.body.style.overflow = "hidden";
     // useEffect(()=>{
     //     if (modal) {
-    
+
     //     } else {
-    
+
     //     }
     // }, [modal]);
 
@@ -16,7 +17,7 @@ const Modal = ({setModal, title, content}) => {
         <ModalDiv>
             <h1>{title}</h1>
             {content}
-            <button onClick={()=>{setModal(false)}}>X</button>
+            <CloseSpan onClick={()=>{setModal(false);}}>&#215;</CloseSpan>
 
         </ModalDiv>
     </Container>

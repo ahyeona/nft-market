@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { Btn } from '../utils/btn.styled';
+import { AdditionalInfoDiv } from './additional.styled';
 
-const TokenAdditionalInfo = ({ el, user, web3, contract, setModal, setTitle, setContent }) => {
+const TokenAdditionalInfo = ({ el, user, web3, contract, getRegisterNFT, setModal, setTitle, setContent }) => {
     const [priceInput, setPriceInput] = useState(null);
 
     const getDecimal = () => {
@@ -33,7 +34,7 @@ const TokenAdditionalInfo = ({ el, user, web3, contract, setModal, setTitle, set
 
         setTitle("지갑");
         setContent("NFT를 발행하려면 지갑에서 진행해주세요.");
-        setModal(true);        
+        setModal(true);
 
         const data = await contract.methods._saleNFTmint(el.jsonHash, getdecimal[0], getdecimal[1]).send({
             from: user.account
@@ -41,11 +42,12 @@ const TokenAdditionalInfo = ({ el, user, web3, contract, setModal, setTitle, set
         console.log(data);
 
         setModal(false);
-        window.location.reload();
+        getRegisterNFT();
+        // window.location.reload();
     }
 
     return (
-        <div style={{ backgroundColor: "aliceblue", marginRight:"20px", marginBottom:"20px"}}>
+        <AdditionalInfoDiv>
             이름 : {el.name}<br />
             설명 : {el.description}<br />
             랭킹 : {el.ranking}<br />
@@ -63,7 +65,7 @@ const TokenAdditionalInfo = ({ el, user, web3, contract, setModal, setTitle, set
                         <Btn onClick={minting}>판매</Btn>
                     </>
             }
-        </div>
+        </AdditionalInfoDiv>
     )
 }
 

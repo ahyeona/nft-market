@@ -22,6 +22,8 @@ const App = () => {
 
   if (contract == null) return <Modal title={"잠시만 기다려주세요."} content={""}/>;
 
+  document.body.style.overflow = "visible";
+
   return (
     <div className="App">
       <div style={{cursor:"pointer"}} onClick={()=>{nav("/")}}><h2 >NFT 마켓</h2></div>

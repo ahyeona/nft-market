@@ -20,3 +20,14 @@ export const ModalDiv = styled.div`
     height: 600px;
     justify-content: center;
 `
+
+export const CloseSpan = styled.span`
+    position: absolute;
+    right: 20px;
+    top: 0px;
+    font-size: 50px;
+    font-weight: bold;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+`

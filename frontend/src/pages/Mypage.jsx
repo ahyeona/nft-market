@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react'
 // nft 판매 정보 작성하는 컴포넌트
 import axios from 'axios';
 import TokenAdditionalInfo from '../components/TokenAdditionalInfo/TokenAdditionalInfo'
-import { NftList } from '../components/TokenAdditionalInfo';
+import { NftList } from '../components';
 import Modal from '../components/utils/modal/Modal';
+import { Container } from '../components/TokenAdditionalInfo/additional.styled';
+import { ListDiv } from '../components/utils/detailsSummary.styled';
 
-const Mypage = ({user, web3, contract}) => {
+const Mypage = ({ user, web3, contract }) => {
   const [registerList, setRegisterList] = useState([]);
   const [forSaleList, setForSaleList] = useState([]);
   const [pendingList, setPendingList] = useState([]);
@@ -20,13 +22,13 @@ const Mypage = ({user, web3, contract}) => {
   // 등록한 정보 불러오는 함수
   const getRegisterNFT = async () => {
     const data = await contract.methods.getRegisterNFT().call({
-      from : user.account
+      from: user.account
     });
 
-    const registers = await Promise.all(data.map(async (el)=>{
-      const reps = await axios.get("https://apricot-wrong-platypus-336.mypinata.cloud/ipfs/"+el.jsonHash);
+    const registers = await Promise.all(data.map(async (el) => {
+      const reps = await axios.get("https://apricot-wrong-platypus-336.mypinata.cloud/ipfs/" + el.jsonHash);
       const { name, description, image, attributes } = reps.data;
-      return {...el, volume : parseInt(el.volume), name, description, image, ranking : attributes[0].value }
+      return { ...el, volume: parseInt(el.volume), name, description, image, ranking: attributes[0].value }
     }));
 
     setRegisterList(registers);
@@ -35,7 +37,7 @@ const Mypage = ({user, web3, contract}) => {
   // 판매 중인 nft 불러오는 함수
   const getSaledNFTList = async () => {
     const list = await contract.methods.getSaledNFTList().call({
-      from : user.account
+      from: user.account
     });
     console.log("getSaledNFTList", list);
 
@@ -55,7 +57,7 @@ const Mypage = ({user, web3, contract}) => {
   // 구매 nft 불러오는 함수
   const getBuyNFTList = async () => {
     const list = await contract.methods.getBuyNFTList().call({
-      from : user.account
+      from: user.account
     });
     console.log("getBuyNFTList", list);
 
@@ -72,101 +74,101 @@ const Mypage = ({user, web3, contract}) => {
     setModal(true);
 
     const data = await contract.methods.accept(id).send({
-      from : user.account
+      from: user.account
     });
     console.log("data", data);
     setModal(false);
-    alert("완료");
-    window.location.reload();
+    // window.location.reload();
+    getSaledNFTList();
   }
 
 
-  useEffect(()=>{
+  useEffect(() => {
     getRegisterNFT();
     getSaledNFTList();
     getBuyNFTList();
   }, [user]);
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log("modal");
+    if (!modal) {
+      document.body.style.overflow = "visible";
+    }
   }, [modal]);
 
   if (modal) {
     return (
-      <Modal setModal={setModal} title={title} content={content}/>
+      <Modal setModal={setModal} title={title} content={content} />
     )
   }
-  
+
   return (
     <div>
       <h2>마이페이지</h2>
-      <div>
-        <h3>구매 중</h3>
-        {
-          buyingNFTList.length != 0 ?
-          <NftList list={buyingNFTList} web3={web3} />
-          :
-          <></>
-        }
+      <ListDiv>
+        <details>
+        <summary>구매 목록</summary>
+          <h3>구매 중</h3>
+          {
+            buyingNFTList.length != 0 ?
+              <NftList list={buyingNFTList} web3={web3} />
+              :
+              <></>
+          }
 
-        <h3>구매 완료</h3>
-        {
-          buyNFTList.length != 0 ?
-          <NftList list={buyNFTList} web3={web3} />
-          :
-          <></>
-        }
+          <h3>구매 완료</h3>
+          {
+            buyNFTList.length != 0 ?
+              <NftList list={buyNFTList} web3={web3} />
+              :
+              <></>
+          }
+        </details>
 
-        <h3>판매 중</h3>
-        {
-          forSaleList.length != 0 ?
-          <NftList list={forSaleList} web3={web3} />
-          :
-          <>없음</>
-        }
+        <details>
+          <summary>판매 목록</summary>
+          <h3>판매 중</h3>
+          {
+            forSaleList.length != 0 ?
+              <NftList list={forSaleList} web3={web3} />
+              :
+              <>없음</>
+          }
 
-        <h3>판매 - 수락 대기</h3>
-        {
-          pendingList.length != 0 ?
-          <NftList list={pendingList} web3={web3} clickFunc={accept} btnText={"수락"} />
-          // pendingList.map((el, index) => {
-          //   return (
-          //     <>
-          //       {el.name}
-          //       {el.tokenId}
-          //       <button onClick={()=>{accept(el.tokenId)}}>수락</button>
-          //     </>
-          //   )
-          // })
-          :
-          <>없음</>
-        }
+          <h3>판매 - 수락 대기</h3>
+          {
+            pendingList.length != 0 ?
+              <NftList list={pendingList} web3={web3} clickNone={true} clickFunc={accept} btnText={"수락"} />
+              :
+              <>없음</>
+          }
 
-        <h3>판매 완료</h3>
-        {
-          soldList.length != 0 ?
-          <NftList list={soldList} web3={web3} />
-          :
-          <>없음</>
-        }
+          <h3>판매 완료</h3>
+          {
+            soldList.length != 0 ?
+              <NftList list={soldList} web3={web3} />
+              :
+              <>없음</>
+          }
+        </details>
 
-
-        <h3>등록한 정보</h3>
-        {
-          registerList.length != 0 ?
-          <div style={{display : 'flex', flexWrap:"wrap"}}>
-            {registerList.map((el, index)=>{
-              return (
-                <div>
-                  <TokenAdditionalInfo key={index} el={el} user={user} web3={web3} contract={contract} setModal={setModal} setTitle={setTitle} setContent={setContent} />
-                </div>
-              )
-            })}
-          </div>
-          :
-          <>없음</>
-        }
-      </div>
+        <details>
+          <summary>등록 목록</summary>
+          <h3>등록한 정보</h3>
+          {
+            registerList.length != 0 ?
+              <Container>
+                {registerList.map((el, index) => {
+                  return (
+                    <TokenAdditionalInfo key={index} el={el} user={user} web3={web3} contract={contract} getRegisterNFT={getRegisterNFT} setModal={setModal} setTitle={setTitle} setContent={setContent} />
+                  )
+                })}
+              </Container>
+              :
+              <>없음</>
+          }
+        </details>
+      </ListDiv>
     </div>
   )
 }

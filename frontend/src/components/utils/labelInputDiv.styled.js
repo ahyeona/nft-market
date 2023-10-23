@@ -33,6 +33,8 @@ export const Content = styled.p`
 `
 export const ContentDiv = styled.div`
     display: flex;
+    align-items: center;
+    width: 500px;
     & ${Title} {
         width: 20%;
     }
@@ -41,11 +43,12 @@ export const ContentDiv = styled.div`
     }
     & input {
         width: 80%;
+        height: 24px;
     }
 `
 
 export const TextDiv = styled.div`
-
+    margin : auto 0;
 `
 
 
@@ -53,6 +56,7 @@ export const Container = styled.div`
     width: 80%;
     background-color: bisque;
     display: flex;
+    margin: 0 auto;
 
     & ${ImgDiv} {
 

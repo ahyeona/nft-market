@@ -2,7 +2,7 @@ import React from 'react'
 import { NftDiv } from './nft.styled'
 import { Btn } from '../utils/btn.styled'
 
-const Nft = ({ token, onClick, btnFunc=false, btnText=false }) => {
+const Nft = ({ token, onClick=false, btnFunc=false, btnText=false }) => {
 
   return (
     <NftDiv onClick={onClick} style={{ backgroundColor: "aliceblue" }}>

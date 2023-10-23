@@ -7,13 +7,10 @@ export const NftDiv = styled.div`
     border: 2px solid black;
     border-radius: 10px;
     box-shadow: 5px 5px 5px 3px #ddd;
+    cursor: pointer;
 
     & img {
         width: 300px;
-    }
-
-    & ${Btn} {
-        
     }
 
 `

@@ -37,8 +37,7 @@ const Detail = ({ user, web3, contract }) => {
       value: await web3.utils.toWei(token.price, "ether").toString(10)
     });
     setModal(false);
-    window.location.reload();
-    console.log(data);
+    getToken();
   }
 
   useEffect(() => {
@@ -63,7 +62,9 @@ const Detail = ({ user, web3, contract }) => {
   }, [token]);
 
   useEffect(() => {
-    console.log("modal");
+    if (!modal) {
+      document.body.style.overflow = "visible";
+    }
   }, [modal]);
 
 

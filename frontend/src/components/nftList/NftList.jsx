@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { Nft } from "../TokenAdditionalInfo/index";
+import { Nft } from "../../components";
 import { useNavigate } from 'react-router-dom'
 import { NftListDiv } from './nftList.styled';
 import axios from 'axios';
 import { Btn } from '../utils/btn.styled';
 
-const NftList = ({ list, web3, clickFunc=false, btnText }) => {
+const NftList = ({ list, web3, clickFunc=false, btnText, clickNone=false }) => {
     const nav = useNavigate();
     const [nfts, setNfts] = useState([]);
+    let onClick;
+    if (!clickNone) {
+        onClick = (tokenId) => { nav(`/detail/${tokenId}`) };
+    } else {
+        onClick = ()=>{};
+    }
 
     const setList = async () => {
         if (nfts.length == 0) {
@@ -42,7 +48,7 @@ const NftList = ({ list, web3, clickFunc=false, btnText }) => {
                     // </>
 
                     <>
-                    <Nft token={el} onClick={(e) => { nav(`/detail/${el.tokenId}`) }} btnFunc={clickFunc} btnText={btnText} />
+                    <Nft token={el} onClick={()=>{onClick(el.tokenId)}} btnFunc={clickFunc} btnText={btnText} />
                     {/* <Btn onClick={()=>{clickFunc(el.tokenId)}}>{btnText}</Btn> */}
                     </>
                 )
@@ -55,7 +61,7 @@ const NftList = ({ list, web3, clickFunc=false, btnText }) => {
             {nfts.map((el, index) => {
                 return (
                     <>
-                    <Nft token={el} onClick={(e) => { nav(`/detail/${el.tokenId}`) }} />
+                    <Nft token={el} onClick={()=>{onClick(el.tokenId)}} />
                     </>
                 )
             })}

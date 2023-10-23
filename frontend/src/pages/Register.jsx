@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from "axios";
 import { pinata_api_key, pinata_secret_api_key } from "../api";
 import { Input } from '../components/utils/input.styled';
-import { labelInputDiv, Container, TextDiv, ImgDiv, ContentDiv } from '../components/utils/labelInputDiv.styled';
+import { labelInputDiv, Container, TextDiv, ImgDiv, ContentDiv, Title } from '../components/utils/labelInputDiv.styled';
 import { BigImg } from '../components/utils/bigImg.styled';
 import { Btn } from '../components/utils/btn.styled';
 import Modal from '../components/utils/modal/Modal';
@@ -108,6 +108,9 @@ const Register = ({ user, web3, contract }) => {
 
   useEffect(() => {
     console.log("modal");
+    if (!modal) {
+      document.body.style.overflow = "visible";
+    }
   }, [modal]);
 
   if (modal) {
@@ -135,16 +138,15 @@ const Register = ({ user, web3, contract }) => {
         </ImgDiv>
         <TextDiv>
           <ContentDiv>
-            <label>이름</label>
+            <Title>이름</Title>
             <Input type="text" onChange={(e) => { setName(e.target.value.trim()) }} />
           </ContentDiv>
           <ContentDiv>
-            <label>설명</label>
+            <Title>설명</Title>
             <Input type="text" onChange={(e) => { setDescription(e.target.value.trim()) }} />
-            {/* <Input type="text" onChange={(e) => { setDescription(e.target.value.trim()) }} /> */}
           </ContentDiv>
           <ContentDiv>
-            <label>발행량</label>
+            <Title>발행량</Title>
             <Input type='number' onChange={(e) => { setVolume(e.target.value.trim()) }} />
           </ContentDiv>
         </TextDiv>
