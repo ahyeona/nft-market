@@ -13,11 +13,35 @@ export const labelInputDiv = styled.div`
     display: flex;
     background-color: beige;
 
+
+
 `
 export const ImgDiv = styled.div`
     width: 500px;
     height: 500px;
-    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+export const Title = styled.p`
+    font-weight: bold;
+    font-size: 18px;
+`
+
+export const Content = styled.p`
+    font-size: 16px;
+`
+export const ContentDiv = styled.div`
+    display: flex;
+    & ${Title} {
+        width: 20%;
+    }
+    & ${Content} {
+        width: 80%;
+    }
+    & input {
+        width: 80%;
+    }
 `
 
 export const TextDiv = styled.div`

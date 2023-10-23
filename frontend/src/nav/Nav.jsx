@@ -5,16 +5,16 @@ import { useNavigate } from 'react-router-dom'
 
 const Nav = ({user}) => {
   const nav = useNavigate();
-  console.log(user.balance.split("."));
 
   return (
     <NavDiv>
-        <h3>{user.account}</h3><br />
-        <h3>{user.balance.split(".")[0]}.{user.balance.toString().split(".")[1].substr(0,4)}</h3>
-        {/* {user.balance.toString().split(".")[1].substr(0,4)} */}
+        <div><h3>{user.account.substr(0,6)}...{user.account.substr(user.account.length-4, user.account.length)}</h3></div>
+        <div><h3>{user.balance.split(".")[0]}.{user.balance.toString().split(".")[1].substr(0,4)}ETH</h3></div>
 
-        <Btn onClick={()=>{nav("/register")}}>등록</Btn>
-        <Btn onClick={()=>{nav("/mypage")}}>마이페이지</Btn>
+        <div>
+          <Btn onClick={()=>{nav("/register")}}>등록</Btn>
+          <Btn onClick={()=>{nav("/mypage")}}>마이페이지</Btn>
+        </div>
 
     </NavDiv>
   )

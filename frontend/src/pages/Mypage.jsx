@@ -43,7 +43,7 @@ const Mypage = ({user, web3, contract}) => {
     //   return {...el, tokenId : parseInt(el.tokenId)}
     // });
     // console.log("pendings", pendings);
-    
+
     // 판매중
     setForSaleList(list[0]);
     // 수락 대기중
@@ -70,7 +70,7 @@ const Mypage = ({user, web3, contract}) => {
     setTitle("지갑");
     setContent("신청 수락은 지갑에서 진행해주세요.");
     setModal(true);
-    
+
     const data = await contract.methods.accept(id).send({
       from : user.account
     });
@@ -88,40 +88,22 @@ const Mypage = ({user, web3, contract}) => {
   }, [user]);
 
   useEffect(()=>{
-    if (modal) {
-      document.body.style.overflow = "hidden";
-      document.body.style.backgroundColor = "#444";
-      // document.querySelector("#nav").style.overflow = "hidden";
-      // document.querySelector("#nav").style.backgroundColor = "#444";
-
-      // return (
-      //   <Modal setModal={setModal} />
-      // )
-    } else {
-      document.body.style.overflow = "visible";
-      document.body.style.backgroundColor = "white";
-      // document.querySelector("#nav").style.overflow = "visible";
-      // document.querySelector("#nav").style.backgroundColor = "white";
-    }
-
+    console.log("modal");
   }, [modal]);
-
-
 
   if (modal) {
     return (
       <Modal setModal={setModal} title={title} content={content}/>
     )
   }
-
-
+  
   return (
     <div>
       <h2>마이페이지</h2>
       <div>
         <h3>구매 중</h3>
         {
-          buyingNFTList.length != 0 ? 
+          buyingNFTList.length != 0 ?
           <NftList list={buyingNFTList} web3={web3} />
           :
           <></>
@@ -129,7 +111,7 @@ const Mypage = ({user, web3, contract}) => {
 
         <h3>구매 완료</h3>
         {
-          buyNFTList.length != 0 ? 
+          buyNFTList.length != 0 ?
           <NftList list={buyNFTList} web3={web3} />
           :
           <></>

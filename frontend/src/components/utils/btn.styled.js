@@ -10,4 +10,5 @@ export const Btn = styled.div`
     font-size: 18px;
     background-color: gray;
     border-radius: 10px;
+    cursor: pointer;
 `

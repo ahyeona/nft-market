@@ -5,11 +5,12 @@ import abi from "./abi/sale.json";
 import { Detail, List, Mypage, Register } from "./pages";
 import Nav from "./nav/Nav";
 import Modal from "./components/utils/modal/Modal";
+import css from "./App.css";
 
 const App = () => {
   const { user, web3 } = useWeb3();
   const [contract, setContract] = useState(null);
-  const CA = "0xC893576a9909e30c997A69Ef6960C026Fa330363";
+  const CA = "0x7D5192973aB61fA91FBE9dee8d846760f0C86F7B";
 
   const nav = useNavigate();
 
@@ -19,19 +20,21 @@ const App = () => {
     setContract(sale);
   }, [web3]);
 
-  if (contract == null) return <Modal title={"잠시만 기다려주세요."} content={"contract null"}/>;
+  if (contract == null) return <Modal title={"잠시만 기다려주세요."} content={""}/>;
 
   return (
     <div className="App">
       <div style={{cursor:"pointer"}} onClick={()=>{nav("/")}}><h2 >NFT 마켓</h2></div>
       <div id="nav"><Nav user={user} /></div>
-      
-      <Routes>
-        <Route path="/" element={<List user={user} web3={web3} contract={contract} />}/>
-        <Route path="/detail/:id" element={<Detail user={user} web3={web3} contract={contract} />} />
-        <Route path="/register" element={<Register user={user} web3={web3} contract={contract} />} />
-        <Route path="/mypage" element={<Mypage user={user} web3={web3} contract={contract} />} />
-      </Routes>
+
+      <div id="page">
+        <Routes>
+          <Route path="/" element={<List user={user} web3={web3} contract={contract} />}/>
+          <Route path="/detail/:id" element={<Detail user={user} web3={web3} contract={contract} />} />
+          <Route path="/register" element={<Register user={user} web3={web3} contract={contract} />} />
+          <Route path="/mypage" element={<Mypage user={user} web3={web3} contract={contract} />} />
+        </Routes>
+      </div>
     </div>
   );
 }

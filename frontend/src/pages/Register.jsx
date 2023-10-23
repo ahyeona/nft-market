@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from "axios";
 import { pinata_api_key, pinata_secret_api_key } from "../api";
 import { Input } from '../components/utils/input.styled';
-import { labelInputDiv, Container, TextDiv, ImgDiv } from '../components/utils/labelInputDiv.styled';
+import { labelInputDiv, Container, TextDiv, ImgDiv, ContentDiv } from '../components/utils/labelInputDiv.styled';
 import { BigImg } from '../components/utils/bigImg.styled';
 import { Btn } from '../components/utils/btn.styled';
 import Modal from '../components/utils/modal/Modal';
@@ -85,8 +85,8 @@ const Register = ({ user, web3, contract }) => {
     const register = await contract.methods.registerData(jsonResp.data.IpfsHash, volume).send({
       from: user.account
     });
-    
-    
+
+
     console.log("register : ", register);
     setModal(false);
     alert("등록 완료");
@@ -101,33 +101,18 @@ const Register = ({ user, web3, contract }) => {
       setImageUrl(null);
     } else {
       setImage(file);
-      setImageUrl(URL.createObjectURL(file)); 
+      setImageUrl(URL.createObjectURL(file));
     }
   }
 
 
-  useEffect(()=>{
-    if (modal) {
-      document.body.style.overflow = "hidden";
-      document.body.style.backgroundColor = "#444";
-      // document.querySelector("#nav").style.overflow = "hidden";
-      // document.querySelector("#nav").style.backgroundColor = "#444";
-
-      // return (
-      //   <Modal setModal={setModal} />
-      // )
-    } else {
-      document.body.style.overflow = "visible";
-      document.body.style.backgroundColor = "white";
-      // document.querySelector("#nav").style.overflow = "visible";
-      // document.querySelector("#nav").style.backgroundColor = "white";
-    }
-
+  useEffect(() => {
+    console.log("modal");
   }, [modal]);
 
   if (modal) {
     return (
-      <Modal setModal={setModal} title={title} content={content}/>
+      <Modal setModal={setModal} title={title} content={content} />
     )
   }
 
@@ -136,26 +121,32 @@ const Register = ({ user, web3, contract }) => {
     <div>
       <h2>등록</h2>
       <Container>
-          <label>이미지</label>
         <ImgDiv>
           <div>
-            <BigImg src = {imageUrl} alt="이미지를 선택하세요." />
+            {
+              imageUrl ?
+                <BigImg src={imageUrl} />
+                :
+                <></>
+
+            }
             <input type="file" onChange={(e) => { loadImg(e) }} />
           </div>
         </ImgDiv>
         <TextDiv>
-        <div>
-          <label>이름</label>
-          <Input type="text" onChange={(e) => { setName(e.target.value.trim()) }} />
-        </div>
-        <div>
-          <label>설명</label>
-          <Input type="text" onChange={(e) => { setDescription(e.target.value.trim()) }} />
-        </div>
-        <div>
-          <label>발행량</label>
-          <Input type="text" onChange={(e) => { setVolume(e.target.value.trim()) }} />
-        </div>
+          <ContentDiv>
+            <label>이름</label>
+            <Input type="text" onChange={(e) => { setName(e.target.value.trim()) }} />
+          </ContentDiv>
+          <ContentDiv>
+            <label>설명</label>
+            <Input type="text" onChange={(e) => { setDescription(e.target.value.trim()) }} />
+            {/* <Input type="text" onChange={(e) => { setDescription(e.target.value.trim()) }} /> */}
+          </ContentDiv>
+          <ContentDiv>
+            <label>발행량</label>
+            <Input type='number' onChange={(e) => { setVolume(e.target.value.trim()) }} />
+          </ContentDiv>
         </TextDiv>
 
         <Btn onClick={upload}>등록</Btn>

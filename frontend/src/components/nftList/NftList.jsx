@@ -9,8 +9,6 @@ const NftList = ({ list, web3, clickFunc=false, btnText }) => {
     const nav = useNavigate();
     const [nfts, setNfts] = useState([]);
 
-    console.log("type", typeof list);
-
     const setList = async () => {
         if (nfts.length == 0) {
             const data = await Promise.all(list.map(async (el, index) => {
@@ -37,9 +35,15 @@ const NftList = ({ list, web3, clickFunc=false, btnText }) => {
             <NftListDiv>
             {nfts.map((el, index) => {
                 return (
+                    // <>
+                    // <Nft token={el} onClick={(e) => { nav(`/detail/${el.tokenId}`) }}>
+                    //     <Btn onClick={()=>{clickFunc(el.tokenId)}}>{btnText}</Btn>
+                    // </Nft>
+                    // </>
+
                     <>
-                    <Nft token={el} onClick={(e) => { nav(`/detail/${el.tokenId}`) }} />
-                    <Btn onClick={()=>{clickFunc(el.tokenId)}}>{btnText}</Btn>
+                    <Nft token={el} onClick={(e) => { nav(`/detail/${el.tokenId}`) }} btnFunc={clickFunc} btnText={btnText} />
+                    {/* <Btn onClick={()=>{clickFunc(el.tokenId)}}>{btnText}</Btn> */}
                     </>
                 )
             })}
